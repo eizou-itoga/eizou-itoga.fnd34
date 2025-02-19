@@ -33,9 +33,22 @@ function nm() {
   
   displayDate(date);
 
-  return function (next) { 
+  function changeBy(next) { 
     date.setDate( date.getDate() + next)
-    return date;
+    displayDate(date);
+  }
+
+  return {
+    increment() {
+      changeBy(7);
+    },
+
+    decrement() {
+      changeBy(-7);
+    },
+    value() {
+      return date;
+    },
   }
   
 }
@@ -77,11 +90,11 @@ setSelect(line.substring(0,3), line.substring(line.length-1));
 const nextMonday = nm();
 
 document.getElementById("nextmonday").addEventListener("click", function (){
-  displayDate(nextMonday(7));
-})
+  nextMonday.increment();
+});
 document.getElementById("forwardmonday").addEventListener("click", function (){
-  displayDate(nextMonday(-7));
-})
+  nextMonday.decrement();
+});
 
 document.getElementById("line").addEventListener("change", function () {
   setSelect(this.value, 1);
